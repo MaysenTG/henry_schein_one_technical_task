@@ -1,2 +1,40 @@
-<h1>Questions#show</h1>
-<p>Find me in app/views/questions/show.html.erb</p>
+<div class="container mt-3 w-75">
+  <h3>Question</h3>
+  <div class="card">
+    <div class="card-header">
+      <%= @account.email %>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><%= @question.title %></h5>
+      <p class="card-text">
+        <%= @question.body %>
+      </p>
+    </div>
+    <div class="card-footer text-muted">
+      <div class="d-flex">
+        <button class="btn fs-5" type="button">
+          <%= @question.upvotes %>
+          <i class="bi bi-hand-thumbs-up"></i>
+        </button>
+        <button class="btn fs-5" type="button">
+          <%= @question.downvotes %>
+          <i class="bi bi-hand-thumbs-down"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <% unless @replies.nil? %>
+    <% @replies.each do |reply| %>
+      <div class="list-group mt-5">
+        <h5>Replies</h5>
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <small>3 days ago</small>
+          </div>
+          <p class="mb-1">Some placeholder content in a paragraph.</p>
+          <small>And some small print.</small>
+        </a>
+      </div>
+    <% end %>
+  <% end %>
+</div>

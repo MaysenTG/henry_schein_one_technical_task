@@ -1,3 +1,4 @@
 class Question < ApplicationRecord
-  has_many :answers, dependent: :destroy
+  has_many :replies, dependent: :destroy
+  belongs_to :account
 end

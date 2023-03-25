@@ -1,12 +1,17 @@
-<div class="container mt-3">
+<div class="container mt-3 w-75">
   <h3>Questions</h3>
   <ol class="list-group">
-    <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-      <div class="ms-2 me-auto">
-        <div class="fw-bold">Subheading</div>
-        Content for list item
-      </div>
-      <span class="badge bg-primary rounded-pill">14</span>
-    </button>
+    <% @questions.each do |question| %>
+      <a href="<%= question_path(question.id) %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Q title</div>
+          Q body truncated
+        </div>
+        <div class="d-flex flex-column">
+          <span class="badge bg-success rounded-pill mb-1">14 Upvotes</span>
+          <span class="badge bg-danger rounded-pill">14 downvotes</span>
+        </div>
+      </a>
+    <% end %>
   </ol>
 </div>
