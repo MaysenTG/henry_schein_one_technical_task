@@ -1,8 +1,17 @@
 <div class="container mt-3 w-75">
-  <h3>Question</h3>
+  <% if notice %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  <div class="d-flex align-items-top">
+    <h3>Question</h3>
+  </div>
   <div class="card">
-    <div class="card-header">
+    <div class="card-header d-flex align-items-center justify-content-between">
       <%= @account.email %>
+      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editQuestionModal">Edit</button>
     </div>
     <div class="card-body">
       <h5 class="card-title"><%= @question.title %></h5>
@@ -23,18 +32,48 @@
       </div>
     </div>
   </div>
+  <%= render "/replies/form" %>
   <% unless @replies.nil? %>
-    <% @replies.each do |reply| %>
-      <div class="list-group mt-5">
-        <h5>Replies</h5>
-        <a href="#" class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <small>3 days ago</small>
-          </div>
-          <p class="mb-1">Some placeholder content in a paragraph.</p>
-          <small>And some small print.</small>
-        </a>
-      </div>
-    <% end %>
+    <div class="mt-5">
+      <h5>Replies</h5>
+      <% @replies.each do |reply| %>
+        <div class="list-group mt-3">
+          <button class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <small><%=  %>user name</small>
+              <small><%= time_ago_in_words(reply.created_at) %></small>
+            </div>
+            <p class="mb-1"><%= reply.body %></p>
+          </button>
+          <% if user_can_edit_question?(@question) %>
+            <%= form_with(model: @question) do |form| %>
+              Mark as answer? 
+              <input type="hidden" name="question[answer_reply_id]" value="<%= reply.id %>">
+              <button class="btn" onclick="this.form.requestSubmit()">
+                <i class="bi bi-star<% if @question.answer_reply_id == reply.id %>-fill<% end %>"></i>
+              </button>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
+</div>
+<!-- Edit question modal -->
+<div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editQuestionModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "/questions/form", question: @question, formtype: "edit" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" form="question_form">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>

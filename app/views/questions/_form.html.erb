@@ -1,4 +1,4 @@
-<%= form_with(model: question) do |form| %>
+<%= form_with(model: question, html: { id: "question_form" }) do |form| %>
   <% if question.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
@@ -12,14 +12,16 @@
   <div>
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Title</label>
-      <%= form.text_field :title, class: "form-control", placeholder: "name@example.com" %>
+      <%= form.text_field :title, class: "form-control", placeholder: "How do I center a div?" %>
     </div>
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Content</label>
       <%= form.text_area :body, class: "form-control" %>
     </div>
   </div>
-  <div>
-    <button type="submit" class="btn btn-primary w-100">Create</button>
-  </div>
+  <% if formtype == "new" %>
+    <div>
+      <button type="submit" class="btn btn-primary w-100">Create</button>
+    </div>
+  <% end %>
 <% end %>

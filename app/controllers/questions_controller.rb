@@ -4,14 +4,14 @@ class QuestionsController < ApplicationController
   before_action :set_params, only: [:create, :update]
   
   def index
-    filter = params[:filter]
+    @filter = params[:answered]
     
     # Add some filtering logic here
-    case(filter)
-    when "unanswered"
-      @questions = Question.where.not(id: Reply.pluck(:question_id))
-    when "answered"
-      @questions = Question.where(id: Reply.pluck(:question_id))
+    case(@filter)
+    when "false"
+      @questions = Question.where(answer_reply_id: nil)
+    when "true"
+      @questions = Question.where.not(answer_reply_id: nil)
     else
       @questions = Question.all
     end
@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: "Question was successfully created."
     else
-      render :new, notice: "Oops, an error occured."
+      redirect_to new_question_path, notice: "Oops, an error occured."
     end
   end
   
@@ -38,7 +38,11 @@ class QuestionsController < ApplicationController
   
   def show
     # @question is already set by set_question, so get the replies
-    @replies = @question.replies.all
+    # Order replies so the @question.answer_reply_id is first
+    
+    @replies = @question.replies.sort_by { |reply| reply.id == @question.answer_reply_id ? 0 : 1 }
+    
+    #@replies = @question.replies.all
     @account = Account.find(@question.account_id)
   end
 
@@ -46,6 +50,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    if @question.update(set_params)
+      redirect_to @question, notice: "Question was successfully updated."
+    else
+      redirect_to @question, notice: "Oops, an error occured."
+    end
   end
 
   def delete
@@ -54,7 +63,7 @@ class QuestionsController < ApplicationController
   private
   
   def set_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, :answer_reply_id, :upvotes, :downvotes)
   end
   
   def set_question

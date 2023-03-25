@@ -1,17 +1,32 @@
 <div class="container mt-3 w-75">
-  <h3>Questions</h3>
+  <div class="d-flex">
+    <h3>Questions</h3>
+    &nbsp;
+    <div class="mx-3 d-flex align-items-center">
+      Filter by: 
+      <a class="btn" href="/">All</a>
+      <a class="btn <% if @filter == "true" %>active<% end %>" href="/?answered=true">All answered</a>
+      <a class="btn <% if @filter == "false" %>active<% end %>" href="/?answered=false">All unanswered</a>
+    </div>
+  </div>
   <ol class="list-group">
-    <% @questions.each do |question| %>
-      <a href="<%= question_path(question.id) %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Q title</div>
-          Q body truncated
-        </div>
-        <div class="d-flex flex-column">
-          <span class="badge bg-success rounded-pill mb-1">14 Upvotes</span>
-          <span class="badge bg-danger rounded-pill">14 downvotes</span>
-        </div>
-      </a>
+    <% if @questions.size == 0 %>
+      <div class="alert alert-info" role="alert">
+        No questions found.
+      </div>
+    <% else %>
+      <% @questions.each do |question| %>
+        <a href="<%= question_path(question.id) %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold"><%= question.title %></div>
+            <%= question.body %>
+          </div>
+          <div class="d-flex flex-column">
+            <span class="badge bg-success rounded-pill mb-1"><%= question.upvotes %> Upvotes</span>
+            <span class="badge bg-danger rounded-pill"><%= question.downvotes %> downvotes</span>
+          </div>
+        </a>
+      <% end %>
     <% end %>
   </ol>
 </div>
