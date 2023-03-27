@@ -34,7 +34,7 @@
   <% if account_signed_in? %>
     <%= render "/replies/form", reply: @reply %>
   <% else %>
-    <a href="#">Sign in to reply</a>
+    <a href="<%= new_account_session_path %>?redirect_to=<%= question_path(@question.id) %>">Sign in to reply</a>
   <% end %>
   <% unless @replies.nil? %>
     <div class="mt-5">
