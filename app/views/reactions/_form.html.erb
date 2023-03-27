@@ -1,0 +1,18 @@
+<div class="card-footer text-muted">
+  <div class="d-flex">
+    <%= form_with(model: [@question, Reaction.new]) do |form| %>
+      <input type="hidden" name="reaction[like]" value="1">
+      <button class="btn fs-5" type="submit">
+        <%= @question.upvotes %>
+        <i class="bi bi-hand-thumbs-up<% if reaction && reaction.reaction_type == "like" %>-fill<% end %>"></i>
+      </button>
+    <% end %>
+    <%= form_with(model: [@question, Reaction.new]) do |form| %>
+      <input type="hidden" name="reaction[dislike]" value="1">
+      <button class="btn fs-5" type="submit">
+        <%= @question.downvotes %>
+        <i class="bi bi-hand-thumbs-down<% if reaction && reaction.reaction_type == "dislike" %>-fill<% end %>"></i>
+      </button>
+    <% end %>
+  </div>
+</div>

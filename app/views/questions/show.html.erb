@@ -18,26 +18,21 @@
       <p class="card-text">
         <%= @question.body %>
       </p>
+      <% question_reply_answer_id = @question.answer_reply_id %>
+      <% unless question_reply_answer_id.nil? %>
+        <small>
+          <a href="#reply_id-<%= question_reply_answer_id %>" class="text-success">Go to answer</a>
+        </small>
+      <% end %>
     </div>
-    <div class="card-footer text-muted">
-      <div class="d-flex">
-        <button class="btn fs-5" type="button">
-          <%= @question.upvotes %>
-          <i class="bi bi-hand-thumbs-up"></i>
-        </button>
-        <button class="btn fs-5" type="button">
-          <%= @question.downvotes %>
-          <i class="bi bi-hand-thumbs-down"></i>
-        </button>
-      </div>
-    </div>
+    <%= render "/reactions/form", question: @question, reaction: @reaction %>
   </div>
   <%= render "/replies/form" %>
   <% unless @replies.nil? %>
     <div class="mt-5">
       <h5>Replies</h5>
       <% @replies.each do |reply| %>
-        <div class="list-group mt-3">
+        <div class="list-group mt-3" id="reply_id-<%= reply.id %>">
           <button class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
               <small><%=  %>user name</small>

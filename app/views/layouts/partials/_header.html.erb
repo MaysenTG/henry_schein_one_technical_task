@@ -13,10 +13,20 @@
           <a class="nav-link" href="<%= new_question_path %>">Create a new question</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <!-- If the user is logged in, show a signout button -->
+      <% if account_signed_in? %>
+        <!-- Create a sign out form using the destroy_account_session_path path -->
+        <form action="<%= destroy_account_session_path %>" method="POST">
+          <!-- Add a hidden input with the name _method and value DELETE -->
+          <input type="hidden" name="_method" value="DELETE">
+          <!-- Add a hidden input with the name authenticity_token and value the token from the meta tag -->
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <!-- Add a submit button -->
+          <input type="submit" value="Sign out" class="btn btn-outline-danger">
+        </form>
+      <% else %>
+        <a class="btn btn-success" href="<%= new_account_session_path %>">Sign in</a>
+      <% end %>
     </div>
   </div>
 </nav>

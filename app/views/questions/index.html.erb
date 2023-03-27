@@ -12,7 +12,7 @@
   <ol class="list-group">
     <% if @questions.size == 0 %>
       <div class="alert alert-info" role="alert">
-        No questions found.
+        No questions found. <a href="<%= new_question_path %>">Create one</a>?
       </div>
     <% else %>
       <% @questions.each do |question| %>

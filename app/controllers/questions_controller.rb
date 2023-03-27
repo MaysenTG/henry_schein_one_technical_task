@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: "Question was successfully created."
     else
-      redirect_to new_question_path, notice: "Oops, an error occured."
+      #redirect_to new_question_path, notice: "Oops, an error occured."
     end
   end
   
@@ -44,6 +44,10 @@ class QuestionsController < ApplicationController
     
     #@replies = @question.replies.all
     @account = Account.find(@question.account_id)
+    
+    if @account
+      @reaction = Reaction.find_by(account_id: current_account.id, question_id: @question.id)
+    end
   end
 
   def edit
