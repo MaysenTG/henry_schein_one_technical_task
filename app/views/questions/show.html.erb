@@ -10,7 +10,7 @@
   </div>
   <div class="card">
     <div class="card-header d-flex align-items-center justify-content-between">
-      u/<%= get_account_username_of_question(@question) %>
+      u/<%= @account.username %>
       <% if account_signed_in? %>
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editQuestionModal">Edit</button>
       <% end %>
@@ -44,7 +44,7 @@
           <% if @question.answer_reply_id == reply.id %>
             <p class="text-success">This is the accepted answer</p>
           <% end %>
-          <button class="<% if @question.answer_reply_id == reply.id %>border border-2 border-success<% end %> list-group-item list-group-item-action">
+          <button class="rounded <% if @question.answer_reply_id == reply.id %>border border-2 border-success<% end %> list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
               <small>u/<%= get_username_from_reply(reply) %></small>
               <small><%= time_ago_in_words(reply.created_at) %></small>

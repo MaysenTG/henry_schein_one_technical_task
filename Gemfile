@@ -47,3 +47,4 @@ end
 gem 'devise'
 
 gem 'htmlbeautifier'
+gem 'bullet'  
