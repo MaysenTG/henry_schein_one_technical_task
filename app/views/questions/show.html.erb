@@ -10,8 +10,10 @@
   </div>
   <div class="card">
     <div class="card-header d-flex align-items-center justify-content-between">
-      <%= @account.email %>
-      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editQuestionModal">Edit</button>
+      u/<%= get_account_username_of_question(@question) %>
+      <% if account_signed_in? %>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editQuestionModal">Edit</button>
+      <% end %>
     </div>
     <div class="card-body">
       <h5 class="card-title"><%= @question.title %></h5>
@@ -25,17 +27,26 @@
         </small>
       <% end %>
     </div>
-    <%= render "/reactions/form", question: @question, reaction: @reaction %>
+    <% if account_signed_in? %>
+      <%= render "/reactions/form", question: @question, reaction: @reaction %>
+    <% end %>
   </div>
-  <%= render "/replies/form" %>
+  <% if account_signed_in? %>
+    <%= render "/replies/form", reply: @reply %>
+  <% else %>
+    <a href="#">Sign in to reply</a>
+  <% end %>
   <% unless @replies.nil? %>
     <div class="mt-5">
       <h5>Replies</h5>
       <% @replies.each do |reply| %>
         <div class="list-group mt-3" id="reply_id-<%= reply.id %>">
-          <button class="list-group-item list-group-item-action">
+          <% if @question.answer_reply_id == reply.id %>
+            <p class="text-success">This is the accepted answer</p>
+          <% end %>
+          <button class="<% if @question.answer_reply_id == reply.id %>border border-2 border-success<% end %> list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
-              <small><%=  %>user name</small>
+              <small>u/<%= get_username_from_reply(reply) %></small>
               <small><%= time_ago_in_words(reply.created_at) %></small>
             </div>
             <p class="mb-1"><%= reply.body %></p>

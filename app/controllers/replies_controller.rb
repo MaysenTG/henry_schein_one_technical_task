@@ -12,10 +12,16 @@ class RepliesController < ApplicationController
     if @reply.save
       redirect_to @question, notice: "Reply was successfully created."
     else
-      redirect_to @question, notice: "Oops, an error occured. Check that your reply is not empty."
+      # Render the question page with the reply form
+      @replies = @question.replies.all
+      render "questions/show", status: :unprocessable_entity
     end
   end
   
+  def new
+    @reply = Reply.new
+  end
+
   private
   def reply_params
     params.require(:reply).permit(:body)

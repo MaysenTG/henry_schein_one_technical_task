@@ -15,12 +15,13 @@ class Account < ApplicationRecord
   validates_format_of :username, with: /^[a-zA-Z0-9_]*$/, :multiline => true
   
 
-  # Allows login with username or email
+  # Allows devise login with username or email
   def login
     @login || self.username || self.email
   end
   
   
+  # Allow login with username or email. This is from following a tutorial no the Devise wiki
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))

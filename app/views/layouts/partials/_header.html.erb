@@ -15,13 +15,9 @@
       </ul>
       <!-- If the user is logged in, show a signout button -->
       <% if account_signed_in? %>
-        <!-- Create a sign out form using the destroy_account_session_path path -->
         <form action="<%= destroy_account_session_path %>" method="POST">
-          <!-- Add a hidden input with the name _method and value DELETE -->
           <input type="hidden" name="_method" value="DELETE">
-          <!-- Add a hidden input with the name authenticity_token and value the token from the meta tag -->
           <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <!-- Add a submit button -->
           <input type="submit" value="Sign out" class="btn btn-outline-danger">
         </form>
       <% else %>

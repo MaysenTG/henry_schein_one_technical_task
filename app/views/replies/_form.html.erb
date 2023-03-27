@@ -1,9 +1,18 @@
-<%= form_with(model: [@question, Reply.new]) do |form| %>
+<%= form_with(model: [@question, @reply]) do |form| %>
   <!-- Show errors on the reply resource if there are any -->
+  <% reply_body_class = "form-control" %>
+  <% if @reply.errors.any? %>
+    <% reply_body_class = "form-control border border-danger" %>
+  <% end %>
   <div>
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Reply</label>
-      <%= form.text_area :body, class: "form-control" %>
+      <%= form.text_area :body, class: reply_body_class %>
+      <% if @reply.errors.any? %>
+        <% @reply.errors.full_messages.each do |message| %>
+          <p class="text-danger"><%= message %></p>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <div>

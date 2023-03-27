@@ -29,6 +29,7 @@ class QuestionsController < ApplicationController
       redirect_to @question, notice: "Question was successfully created."
     else
       #redirect_to new_question_path, notice: "Oops, an error occured."
+      render :new, status: :unprocessable_entity
     end
   end
   
@@ -38,15 +39,15 @@ class QuestionsController < ApplicationController
   
   def show
     # @question is already set by set_question, so get the replies
-    # Order replies so the @question.answer_reply_id is first
-    
+    # We need to order replies so the @question.answer_reply_id is first (for visual purposes)
     @replies = @question.replies.sort_by { |reply| reply.id == @question.answer_reply_id ? 0 : 1 }
     
-    #@replies = @question.replies.all
+    @reply = Reply.new
+    
     @account = Account.find(@question.account_id)
     
     if @account
-      @reaction = Reaction.find_by(account_id: current_account.id, question_id: @question.id)
+      #@reaction = Reaction.find_by(account_id: current_account.id, question_id: @question.id)
     end
   end
 
