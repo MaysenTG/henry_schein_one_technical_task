@@ -14,15 +14,26 @@ I initially used Rails commands to generate the models for Questions and Replies
 
 
 ### **Replies**
-
+Each reply has a body, reference to an account, and reference to a question. Replies can only be created when logged in. Replies have a one-to-many relationship with accounts, and a one-to-many relationship with questions. Replies can be marked as the answer to a question by setting the parent question's `answer_reply_id` to the reply's ID. Only the owner of the question can mark a reply as the answer to their question.
 
 ### **Accounts**
+Each account has a username, email and password. Accounts have a one-to-many relationship with questions, and a one-to-many relationship with replies.
+
 
 <br/>
 
 ---
 ## **Assumptions, considerations or trade-offs I made**
+### Trade offs
+I could have use a frontend framework like React or EmberJS, but I decided to use Rails views as I was able to create a better app within the alloted time. In the Ruby on Rails position, I would quickly become familiar with EmberJS.
 
+I was also wanting to imlpement a reaction system for a question, but ran out of time to implement this feature and have it working properly. If I had the more time, I would implement a fully working Reaction model which holds a question ID, the account ID and the type of reaction (upvote, downvote).
+
+### Assumptions
+People need accounts to create questions and replies. Only the owner of a question can mark a reply as the answer to their question or edit the question.
+
+### Considerations
+I've ensured that the app's routes are tidy and easy to understand. I've ensured the error messages displayed are clear and easy to understand.
 
 <br/>
 

@@ -14,6 +14,7 @@
       <%= f.label :remember_me %>
     </div>
   <% end %>
+  <input type="hidden" value="<% if request.query_parameters["redirect_to"] %><%= request.query_parameters["redirect_to"] %><% else %>/<% end %>" name="redirect_to"/>
   <div class="actions mb-3">
     <%= f.submit "Log in", class: "btn btn-primary w-100" %>
   </div>

@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
     end
     
     return redirect_to
-    
   end
     
   protected
