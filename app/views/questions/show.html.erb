@@ -27,8 +27,11 @@
         </small>
       <% end %>
     </div>
-    <% if account_signed_in? %>
-      <%= render "/reactions/form", question: @question, reaction: @reaction %>
+    <%# Form for question reactions. Not fully implemented due to time constraints %>
+    <% if false %>
+      <% if account_signed_in? %>
+        <%= render "/reactions/form", question: @question, reaction: @reaction %>
+      <% end %>
     <% end %>
   </div>
   <% if account_signed_in? %>
